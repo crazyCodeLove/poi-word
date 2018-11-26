@@ -70,8 +70,10 @@ public class MultiThreadMerge {
                 e.printStackTrace();
                 Thread.currentThread().interrupt();
                 result.cancel(true);
+                executorService.shutdownNow();
                 return false;
             } catch (ExecutionException e) {
+                executorService.shutdownNow();
                 e.getCause().printStackTrace();
                 return false;
             }
