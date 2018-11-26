@@ -19,14 +19,14 @@ import java.util.concurrent.*;
 public class MultiThreadMerge {
 
     public boolean merge(final String destFilename, List<String> mergeDocs) {
-        int threadCount = mergeDocs.size() / 100 + 1;
+        int threadCount = mergeDocs.size() / 90 + 1;
         String[][] threadDocs = new String[threadCount][mergeDocs.size() / threadCount + 1];
         List<String> tmergeDocs = new LinkedList<>();
         tmergeDocs.addAll(mergeDocs);
 
-        HashSet<String> globalAlreadyFiles = new HashSet<>();
+        HashSet<String> globalAlreadyFiles = new HashSet<>(128);
         for (int i = 0; i < threadCount; i++) {
-            HashSet<String> threadAlreadyFiles = new HashSet<>();
+            HashSet<String> threadAlreadyFiles = new HashSet<>(128);
             int everyThreadDocsCount = mergeDocs.size() / threadCount + 1;
             for (int j = 0; j < everyThreadDocsCount && !tmergeDocs.isEmpty(); j++) {
                 threadDocs[i][j] = tmergeDocs.remove(0);
@@ -61,17 +61,22 @@ public class MultiThreadMerge {
                 threadResults.add(executorService.submit(new MergeDocThread(singThreadDocs, genFilenames.get(i))));
             }
         }
-        executorService.shutdown();
         for (Future<Boolean> result : threadResults) {
             try {
                 if (!result.get()) {
                     return false;
                 }
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
+                result.cancel(true);
+                return false;
+            } catch (ExecutionException e) {
+                e.getCause().printStackTrace();
                 return false;
             }
         }
+        executorService.shutdown();
         MergeDocHandler handler = new MergeDocHandler();
         boolean mergeResult = false;
         try {
