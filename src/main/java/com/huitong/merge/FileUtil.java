@@ -1,4 +1,4 @@
-package com.huitong.merge;
+package com.sse.demo2.service.util;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -127,6 +127,21 @@ public class FileUtil {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static boolean writeByte2File(String filename, byte[] content) {
+        FileOutputStream fileOutputStream;
+        try {
+            fileOutputStream = new FileOutputStream(filename);
+            fileOutputStream.write(content);
+            fileOutputStream.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean deleteFile(String filename) {
