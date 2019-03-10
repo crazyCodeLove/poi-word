@@ -33,7 +33,7 @@ public class MultiThreadMerge {
                 if (globalAlreadyFiles.contains(threadDocs[i][j])) {
                     String threadSafeFilename = getThreadSafeFilename(threadDocs[i][j], i);
                     if (!threadAlreadyFiles.contains(threadSafeFilename)) {
-                        if (!FileUtil.copyFile(threadSafeFilename, threadDocs[i][j])) {
+                        if (!com.sse.demo2.service.util.FileUtilHelper.copyFile(threadSafeFilename, threadDocs[i][j])) {
                             return false;
                         }
                     }

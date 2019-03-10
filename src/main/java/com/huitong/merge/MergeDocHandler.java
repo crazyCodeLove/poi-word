@@ -29,6 +29,7 @@ public class MergeDocHandler {
     static {
         ZipSecureFile.setMinInflateRatio(0.00001);
     }
+
     public MergeDocHandler() {
     }
 
@@ -62,7 +63,7 @@ public class MergeDocHandler {
         docs.add(inFile1);
         docs.add(inFile1);
         docs.add(inFile2);
-        System.out.println(handler.iMergeMixedFileList2Docx(outfile,docs));
+        System.out.println(handler.iMergeMixedFileList2Docx(outfile, docs));
     }
 
     private static void testMerge() {
@@ -94,6 +95,7 @@ public class MergeDocHandler {
     /**
      * 将 doc 或 docx 文件列表 mergeList 合并到目标文件 destFilename，目标文件 destFilename 后缀是 .docx
      * doc 文件是生成的通知单，其他格式的 doc 不支持。
+     *
      * @param destFilename
      * @param mergeList
      * @return
@@ -103,7 +105,7 @@ public class MergeDocHandler {
         if (!endsWithDocx(destFilename)) {
             return result;
         }
-        FileUtil.deleteFile(destFilename);
+        com.sse.demo2.service.util.FileUtilHelper.deleteFile(destFilename);
         if (mergeList == null || mergeList.isEmpty()) {
             return result;
         }
@@ -282,7 +284,7 @@ public class MergeDocHandler {
         boolean result = false;
         /** 目标文件不存在 */
         if (!new File(destFilename).exists()) {
-            return FileUtil.copyFile(destFilename, appendFilename);
+            return com.sse.demo2.service.util.FileUtilHelper.copyFile(destFilename, appendFilename);
         }
         XWPFDocument desDocument = new XWPFDocument(new FileInputStream(destFilename));
         XWPFDocument srcDocument = new XWPFDocument(new FileInputStream(appendFilename));

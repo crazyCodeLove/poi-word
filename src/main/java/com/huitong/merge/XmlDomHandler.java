@@ -71,7 +71,7 @@ public class XmlDomHandler {
      * @return
      */
     public static boolean isWordXml(final String filename) {
-        String content = FileUtil.getFileContentStr(filename);
+        String content = com.sse.demo2.service.util.FileUtilHelper.getFileContentStr(filename);
         return isWordXmlContent(content);
     }
 
@@ -544,7 +544,7 @@ public class XmlDomHandler {
      */
     public XmlBody getXmlBody() {
         String bodyContent = null;
-        String fileContentStr = FileUtil.getFileContentStr(filename);
+        String fileContentStr = com.sse.demo2.service.util.FileUtilHelper.getFileContentStr(filename);
         String end = "</w:body>";
         int bodyStart = fileContentStr.indexOf("<w:body>");
         int bodyEnd = fileContentStr.indexOf(end);

@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
  * @date 2018-10-11 17:13
  */
 
-public class FileUtil {
+public class FileUtilHelper {
 
     public static String getPath(String filename) {
         String path = null;
