@@ -3,11 +3,12 @@ package com.huitong.convert;
 import org.apache.poi.xwpf.converter.pdf.PdfConverter;
 import org.apache.poi.xwpf.converter.pdf.PdfOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.icepdf.core.exceptions.PDFException;
-import org.icepdf.core.exceptions.PDFSecurityException;
 import org.icepdf.core.pobjects.Document;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 
 /**
@@ -53,18 +54,17 @@ public class Docx2Pdf {
         return targetStream.toByteArray();
     }
 
-    private static int getPdfDocumentPageNumber(String pdfFilename) throws IOException, PDFException, PDFSecurityException {
+    private static int getPdfDocumentPageNumber(String pdfFilename) {
         Document document = new Document();
         document.setFile(pdfFilename);
         return document.getPageTree().getNumberOfPages();
     }
 
-    private static int getPdfDocumentPageNumber(InputStream pdfInStream, String pdfFilename) throws IOException, PDFException, PDFSecurityException {
+    private static int getPdfDocumentPageNumber(InputStream pdfInStream, String pdfFilename) {
         Document document = new Document();
         document.setInputStream(pdfInStream, pdfFilename);
         return document.getPageTree().getNumberOfPages();
     }
-
 
 
 }
